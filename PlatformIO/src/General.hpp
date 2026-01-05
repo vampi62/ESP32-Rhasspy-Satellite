@@ -417,10 +417,10 @@ void handleFSf ( AsyncWebServerRequest* request, const String& route ) {
         if (request->method() == HTTP_POST) {
             for(auto config_value: config_values)
             {
-                AsyncWebParameter* p = request->getParam(config_value.first.c_str(), true);
+                const AsyncWebParameter* p = request->getParam(config_value.first.c_str(), true);
                 if (p)
                 {
-                  bool sn = config_value.second.toValue(p);
+                  bool sn = config_value.second.toValue((AsyncWebParameter*)p);
                   Serial.printf("Parameter %s, value %s save? = %d\r\n", p->name().c_str(), p->value().c_str(), sn);
                   if (sn) { config_value.second.apply(); }
                   saveNeeded |= sn;
